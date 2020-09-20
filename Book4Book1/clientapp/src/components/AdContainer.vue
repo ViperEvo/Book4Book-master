@@ -61,6 +61,8 @@
 <script>
     import AddAdvert from './AddAdvert.vue'
     import ShowAdvert from './ShowAdvert.vue'
+    import jQuery from 'jquery';
+    let $ = jQuery;
 
     export default {
         name: 'AdContainer',
@@ -128,7 +130,7 @@
                 this.addAdvertVisible = true;
             },
             refreshAdverts() {
-                this.xd = "xdd";
+                this.loadAdverts();
             },
             showAdvert(scope) {
                 this.showAdvertVisible = true;
@@ -137,7 +139,19 @@
             filterHandler(value, row, column) {
                 const property = column['property'];
                 return row[property] === value;
-            }
+            },
+            loadAdverts() {
+                $.ajax({
+                    type: "POST",
+                    url: "/GetAllAnnouncements",
+                    success: function (response) {
+                        console.log(response)
+                    },
+                    error: function (response) {
+                        console.log("Coœ posz³o nie tak" + response)
+                    }
+                })
+            },
         }
     }
 </script>
